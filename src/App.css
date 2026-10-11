@@ -1,5 +1,6 @@
 #root {
   min-height: 100vh;
+  background: var(--page-bg);
 }
 
 .site-shell {
@@ -51,6 +52,35 @@
   font-weight: 600;
   text-decoration: none;
   transition: color 160ms ease;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 11px;
+  border: 1px solid var(--button-border);
+  border-radius: 4px;
+  color: var(--button-text);
+  background: var(--button-bg);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.theme-toggle > span:first-child {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.theme-toggle:hover {
+  border-color: var(--blue);
 }
 
 .site-header nav a:hover,
@@ -170,7 +200,7 @@
 
 .about-copy {
   max-width: 590px;
-  color: #45566a;
+  color: var(--copy-text);
   font-size: 1.06rem;
   line-height: 1.85;
 }
@@ -193,7 +223,7 @@
   padding: 12px 14px 12px 39px;
   border: 1px solid var(--line);
   border-radius: 4px;
-  color: #34485f;
+  color: var(--card-text);
   font-size: 0.9rem;
   line-height: 1.45;
 }
@@ -243,12 +273,23 @@
 
   .site-header nav {
     width: 100%;
-    justify-content: space-between;
-    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    column-gap: 14px;
+    row-gap: 10px;
   }
 
   .site-header nav a {
     font-size: 0.73rem;
+  }
+
+  .theme-toggle {
+    min-height: 32px;
+    flex-shrink: 0;
+    margin-left: auto;
+    gap: 5px;
+    padding: 0 8px;
+    font-size: 0.72rem;
   }
 
   .hero {
