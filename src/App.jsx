@@ -1,5 +1,8 @@
+import { useLayoutEffect, useState } from 'react'
 import profile from './profile.js'
 import './App.css'
+
+const themeStorageKey = 'about-me-theme'
 
 const sections = [
   { id: 'about', label: 'About Me' },
@@ -18,6 +21,31 @@ function TopicList({ items }) {
 }
 
 function App() {
+  const [theme, setTheme] = useState(() => {
+    try {
+      const savedTheme = window.localStorage.getItem(themeStorageKey)
+      return savedTheme === 'dark' ? 'dark' : 'light'
+    } catch (error) {
+      console.error('Unable to read the saved color theme.', error)
+      return 'light'
+    }
+  })
+
+  useLayoutEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
+
+  function toggleTheme() {
+    const nextTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(nextTheme)
+
+    try {
+      window.localStorage.setItem(themeStorageKey, nextTheme)
+    } catch (error) {
+      console.error('Unable to save the selected color theme.', error)
+    }
+  }
+
   return (
     <div className="site-shell">
       <header className="site-header">
@@ -33,6 +61,19 @@ function App() {
               {section.label}
             </a>
           ))}
+          <button
+            className="theme-toggle"
+            type="button"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+            aria-pressed={theme === 'dark'}
+            title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          >
+            <span aria-hidden="true">{theme === 'light' ? '☾' : '☀'}</span>
+            <span className="theme-toggle-label">
+              {theme === 'light' ? 'Dark' : 'Light'}
+            </span>
+          </button>
         </nav>
       </header>
 
